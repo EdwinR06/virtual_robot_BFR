@@ -9,6 +9,8 @@ import com.qualcomm.robotcore.hardware.OdomDcMotor;
 
 import virtual_robot.controller.VirtualBot;
 import virtual_robot.controller.VirtualGamePadController;
+import virtual_robot.util.loc.FTCUtil;
+import virtual_robot.util.loc.Localizer;
 
 @TeleOp(name = "mecanum driving opmode", group = "ftc16072")
 public class MecanumDrivingOpMode extends OpMode {
@@ -43,9 +45,11 @@ public class MecanumDrivingOpMode extends OpMode {
         frontRightMotor.setPower(drive - turn);
         backRightMotor.setPower(drive - turn);
 
-        telemetry.addData("x", backRightMotor.getActualPosition());
-        telemetry.addData("y", backLeftMotor.getActualPosition());
-        telemetry.addData("heading", frontLeftMotor.getActualPosition());
+        Localizer loc = FTCUtil.getLocalizer(backRightMotor, backLeftMotor, frontLeftMotor);
+
+        telemetry.addData("x", loc.getX());
+        telemetry.addData("y", loc.getHeading());
+        telemetry.addData("heading", loc.getY());
 
         telemetry.update();
 
