@@ -17,6 +17,7 @@ import javafx.scene.shape.Polyline;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Callback;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import com.qualcomm.robotcore.hardware.Odometery;
 import org.reflections.Reflections;
 import virtual_robot.config.Config;
 import javafx.application.Platform;
@@ -32,12 +33,10 @@ import javafx.scene.paint.Color;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.DcMotorImpl;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-import virtual_robot.controller.robots.classes.MechanumBot;
-import virtual_robot.controller.robots.classes.TwoWheelBot;
+import virtual_robot.controller.robots.classes.MecanumBot;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;
-import java.net.URL;
 import java.util.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -131,6 +130,7 @@ public class VirtualRobotController {
         fieldPane.setMaxHeight(fieldWidth);
         imgViewBackground.setFitWidth(fieldWidth);
         imgViewBackground.setFitHeight(fieldWidth);
+        Odometery.setScaleFactor(fieldWidth);
         imgViewBackground.setViewport(new Rectangle2D(0, 0, fieldWidth, fieldWidth));
         imgViewBackground.setImage(backgroundImage);
         Rectangle pathRect = new Rectangle(fieldWidth, fieldWidth);
@@ -177,7 +177,7 @@ public class VirtualRobotController {
                 validConfigClasses.add(c);
         }
         cbxConfig.setItems(validConfigClasses);
-        cbxConfig.setValue(MechanumBot.class);
+        cbxConfig.setValue(MecanumBot.class);
 
         cbxConfig.setCellFactory(new Callback<ListView<Class<?>>, ListCell<Class<?>>>() {
             @Override
@@ -390,8 +390,6 @@ public class VirtualRobotController {
     }
 
     private void runOpModeAndCleanUp(){
-
-        try {
             //For regular opMode, run user-defined init() method. For Linear opMode, init() starts the execution of
             //runOpMode on a helper thread.
             opMode.init();
@@ -435,11 +433,6 @@ public class VirtualRobotController {
             //For regular opMode, run user-defined stop() method, if any. For Linear opMode, shut down the
             //helper thread that runs runOpMode.
             opMode.stop();
-        } catch(Exception e){
-            System.out.println("Exception thrown by opModeThread.");
-            System.out.println(e.getClass().getName());
-            System.out.println(e.getLocalizedMessage());
-        }
 
         bot.powerDownAndReset();
         if (!executorService.isShutdown()) executorService.shutdown();

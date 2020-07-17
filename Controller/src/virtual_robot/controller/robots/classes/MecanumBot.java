@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.hardware.bosch.BNO055IMUImpl;
 import com.qualcomm.robotcore.hardware.DcMotorImpl;
 import com.qualcomm.robotcore.hardware.MotorType;
+
 import virtual_robot.controller.BotConfig;
 import virtual_robot.controller.VirtualBot;
 import virtual_robot.controller.VirtualRobotController;
@@ -21,7 +22,7 @@ import virtual_robot.util.AngleUtils;
  *
  */
 @BotConfig(name = "Mechanum Bot", filename = "mechanum_bot")
-public class MechanumBot extends VirtualBot {
+public class MecanumBot extends VirtualBot {
 
     MotorType motorType;
     private DcMotorImpl[] motors = null;
@@ -42,7 +43,7 @@ public class MechanumBot extends VirtualBot {
     private double[][] tWR; //Transform from wheel motion to robot motion
 
 
-    public MechanumBot(){
+    public MecanumBot(){
         super();
         motors = new DcMotorImpl[]{
                 (DcMotorImpl)hardwareMap.dcMotor.get("back_left_motor"),

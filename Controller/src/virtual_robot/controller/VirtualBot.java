@@ -181,6 +181,13 @@ public abstract class VirtualBot {
 
     public HardwareMap getHardwareMap(){ return hardwareMap; }
 
+    public double getX(){
+        return x;
+    }
+    public double getY(){
+        return y;
+    }
+
     /**
      * Create the HardwareMap object for the specific robot configuration, and assign it to the
      * hardwareMap variable.
